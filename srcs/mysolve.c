@@ -6,7 +6,7 @@
 /*   By: mdamette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:56:17 by mdamette          #+#    #+#             */
-/*   Updated: 2016/12/05 11:01:41 by thgiraud         ###   ########.fr       */
+/*   Updated: 2016/12/05 11:23:16 by thgiraud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char			**ft_result(t_tab *tab, int max)
 	t = NULL;
 	while (!t)
 	{
-		t = ft_fill_empty(t, max);
+		t = ft_empty(t, max);
 		t = ft_solve(t, tab, max);
 		max++;
 	return (t);
