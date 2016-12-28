@@ -5,53 +5,61 @@
 #                                                     +:+ +:+         +:+      #
 #    By: thgiraud <thgiraud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/24 18:00:18 by thgiraud          #+#    #+#              #
-#    Updated: 2016/11/24 18:27:51 by thgiraud         ###   ########.fr        #
+#    Created: 2016/12/15 15:24:00 by thgiraud          #+#    #+#              #
+#    Updated: 2016/12/26 13:13:12 by thgiraud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.PHONY: all, $(NAME), clean, fclean, re
+
 NAME = fillit
 
+NOC=\033[0m
+OKC=\033[32m
+ERC=\033[31m
+WAC=\033[33m
+
 CC = gcc
+CC_FLAGS = -Wall -Werror -Wextra
 
-CFLAGS = -Wall -Wextra -Werror
+SRC_PATH = ./srcs/
+INC_PATH = ./includes/
+OBJ_PATH = ./obj/
+LFT_PATH = ./libft/
 
-PATH_SRC = ./srcs/
-PATH_INC = ./includes/
-PATH_OBJ = ./obj/
-PATH_LIB = ./libft/
+SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+INC = $(addprefix -I,$(INC_PATH))
 
-SRC = $(addprefix $(PATH_SRC),$(NAME_SRC))
-OBJ = $(addprefix $(PATH_OBJ),$(NAME_OBJ))
-INC = $(addprefix -I,$(PATH_INC))
+OBJ_NAME = $(SRC_NAME:.c=.o)
 
-NAME_OBJ = $(SRC_NAME:.c=.o)
-NAME_INC = fillit.h
-NAME_SRC = //ADD SRCS
+INC_NAME = fillit.h
 
-.PHONY: all, $(NAME), clean, fclean, re
+SRC_NAME = check.c open.c init_list.c main.c backtracker.c printab.c
 
 all: $(NAME)
 
-$(NAME):	$(OBJ)
-			echo
-			make -C $(PATH_LIB)
-			$(CC) -o $(NAME) $(OBJ) -lm -L $(PATH_LIB) -lft
-			echo "FILLIT:\t\tFillit ready"
+$(NAME): $(OBJ)
+	@echo
+	@make -C $(LFT_PATH)
+	@$(CC) -o $(NAME) $(OBJ) -lm -L $(LFT_PATH) -lft
+	@echo "$(OKC)FILLIT:\t\tFillit ready$(NOC)"
+	@echo "======"
 
-$(PATH_OBJ)%.o: $(PATH_SRC)%.c
-			mkdir -p $(PATH_OBJ)
-			$(CC) $(CFLAGS) $(INC) -o -c <
-			echo -n =
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(CC_FLAGS) $(INC) -o $@ -c $<
+	@echo -n =
 
 clean:
-			make -C $(PATH_LIB) clean
-			rm -rf $(PATH_OBJ)
-			echo "FILLIT:\t\tRemoving OBJ path: ./obj/"
+	@make -C $(LFT_PATH) clean
+	@rm -rf $(OBJ_PATH)
+	@echo "$(WAC)FILLIT:\t\tRemoving OBJ path: ./obj/$(NOC)"
 
-fclean: 	clean
-			make -C $(PATH_LIB) fclean
-			rm -f $(NAME)
-			echo "FILLIT:\t\tRemoving fillit executable"
+fclean: clean
+	@make -C $(LFT_PATH) fclean
+	@rm -f $(NAME)
+	@echo "$(WAC)FILLIT:\t\tRemoving fillit executable$(NOC)"
 
-re:			fclean all
+re: fclean all
