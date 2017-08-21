@@ -29,5 +29,5 @@ Now you can run <code>./fillit <tetriminos_file></code>
 [What it looks like while running]
 
 <p align="center">
-  <img src="" width="90%"/>
+  <img src="https://github.com/wickedpool/Fillit-42/blob/master/img/fillit.png" width="60%"/>
 </p>
